@@ -1,5 +1,3 @@
-JavaScript
-1
 const tracks = [
 2
 {
@@ -36,58 +34,110 @@ modules: [
 18
 ]
 19
-}
+},
 20
-];
+{
 21
- 
+name: "AZ-104",
 22
-const menu = document.getElementById("menu");
+description: "Azure Administrator certification.",
 23
-const content = document.getElementById("content");
+modules: [
 24
-const dashboard = document.getElementById("dashboard");
+"Identity",
 25
- 
+"Storage",
 26
-tracks.forEach(track => {
+"Networking"
 27
-const btn = document.createElement("button");
+]
 28
- 
+},
 29
-btn.textContent = track.name;
+{
 30
- 
+name: "AZ-305",
 31
-btn.addEventListener("click", () => {
+description: "Azure Architect certification.",
 32
- 
+modules: [
 33
-dashboard.textContent =
+"Architecture",
 34
-`Selected: ${track.name}`;
+"Security",
 35
- 
+"Governance"
 36
-content.innerHTML = `
+]
 37
-<h2>${track.name}</h2>
+}
 38
-<p>${track.description}</p>
+];
 39
-<ul>
-40
-${track.modules.map(m => `<li>${m}</li>`).join("")}
-41
-</ul>
-42
-`;
-43
-});
-44
  
+40
+const menu = document.getElementById("menu");
+41
+const content = document.getElementById("content");
+42
+const dashboard = document.getElementById("dashboard");
+43
+ 
+44
+tracks.forEach(track => {
 45
-menu.appendChild(btn);
+const btn = document.createElement("button");
 46
+ 
+47
+btn.textContent = track.name;
+48
+ 
+49
+btn.addEventListener("click", () => {
+50
+ 
+51
+dashboard.textContent =
+52
+`Selected: ${track.name}`;
+53
+ 
+54
+content.innerHTML = `
+55
+<h2>${track.name}</h2>
+56
+<p>${track.description}</p>
+57
+<ul>
+58
+${track.modules.map(m => `<li>${m}</li>`).join("")}
+59
+</ul>
+60
+`;
+61
+});
+62
+ 
+63
+menu.appendChild(btn);
+64
+});
+65
+ 
+66
+document.getElementById("revisionBtn").addEventListener("click", () => {
+67
+content.innerHTML += "<p><strong>Revision sheet loaded.</strong></p>";
+68
+});
+69
+ 
+70
+document.getElementById("quizBtn").addEventListener("click", () => {
+71
+content.innerHTML += "<p><strong>Quiz loaded.</strong></p>";
+72
 });
