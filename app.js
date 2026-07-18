@@ -48,8 +48,11 @@ modules:[
 
 ];
 
-const menu = document.getElementById("courseMenu");
-const content = document.getElementById("contentArea");
+const menu =
+document.getElementById("courseMenu");
+
+const content =
+document.getElementById("contentArea");
 
 function renderCourses(data){
 
@@ -57,131 +60,82 @@ menu.innerHTML = "";
 
 data.forEach(course=>{
 
-const btn=document.createElement("button");
+const btn =
+document.createElement("button");
 
-btn.className="track-button";
+btn.className = "track-button";
 
-btn.textContent=course.name;
+btn.textContent = course.name;
 
 btn.onclick=()=>showCourse(course);
 
 menu.appendChild(btn);
 
 });
-
 }
 
 function showCourse(course){
 
 content.innerHTML = `
 
-<div class="space-y-6">
-
-<h2 class="text-4xl font-bold text-blue-700">
+<h2 class="text-3xl font-bold mb-4">
 ${course.name}
 </h2>
 
-<p class="text-lg text-slate-600">
+<p class="mb-4">
 ${course.description}
 </p>
 
-<div class="bg-slate-50 rounded-xl p-5 border">
+<ul class="list-disc pl-5 mb-4">
 
-<h3 class="text-xl font-bold mb-3">
-📚 Learning Modules
-</h3>
+${course.modules
+.map(x=>`<li>${x}</li>`)
+.join("")}
 
-<ul class="list-disc pl-5 space-y-2">
-${course.modules.map(
-x=>`<li>${x}</li>`
-).join("")}
 </ul>
 
-</div>
+}"
+target="_blank"
+class="text-blue-600 font-bold">
 
-<div class="bg-yellow-100 border-l-4 border-yellow-500 rounded-xl p-4">
-
-<h3 class="font-bold text-xl">
-👉 ACTION REQUIRED
-</h3>
-
-<p>
-Complete the official Microsoft Learn path before taking the quiz.
-</p>
-
-</div>
-
-<div class="bg-gradient-to-r from-blue-600 to-cyan-500 rounded-2xl p-6 text-white shadow-xl">
-
-<div class="flex justify-between items-center flex-wrap">
-
-<div>
-
-<h3 class="text-2xl font-bold">
-🚀 READY FOR THE NEXT STEP?
-</h3>
-
-<p class="mt-2">
-Click below to launch the official Microsoft Learn training path.
-</p>
-
-</div>
-
-<div class="text-4xl animate-bounce">
-➜➜➜
-</div>
-
-</div>
-
-<div class="mt-5">
-
-${course.link}="inline-block bg-white text-blue-700 px-8 py-4 rounded-xl text-lg font-bold shadow hover:bg-slate-100">
-
-📘 CLICK HERE TO START MICROSOFT LEARN
+Open Microsoft Learn
 
 </a>
 
-</div>
+<hr class="my-4">
 
-<p class="mt-4 text-blue-100">
+<button
+class="bg-green-600 text-white px-4 py-2 rounded"
+onclick="startQuiz('${course.name}')">
 
-Microsoft Learn will open in a new browser tab.
+Start Quiz
 
+</button>
+
+`;
+
+}
+
+function startQuiz(name){
+
+content.innerHTML = `
+
+<h2 class="text-2xl font-bold mb-4">
+${name} Quiz
+</h2>
+
+<p>
+Which Azure service provides
+virtual machines?
 </p>
 
-</div>
+<div class="mt-4">
 
-<div class="bg-white border rounded-xl p-5 shadow">
-
-<h3 class="text-xl font-bold mb-4">
-🎯 Learning Journey
-</h3>
-
-<div class="space-y-3">
-
-<div>✅ Step 1: Review Learning Modules</div>
-
-<div class="text-blue-600 text-xl">
-⬇
-</div>
-
-<div>📘 Step 2: Open Microsoft Learn</div>
-
-<div class="text-blue-600 text-xl">
-⬇
-</div>
-
-<div>📝 Step 3: Complete Practice Quiz</div>
-
-<div class="text-green-600 text-xl">
-⬇
-</div>
-
-<div>🏆 Step 4: Earn Your Certificate</div>
-
-</div>
-
-</div>
+<button
+onclick="submitQuiz(true)"
+class="bg-blue-700 text-white px-4 py-2 rounded">
+Azure Virtual Machines
+</button>
 
 </div>
 
@@ -189,24 +143,97 @@ Microsoft Learn will open in a new browser tab.
 
 }
 
-document.getElementById("themeBtn")
-.addEventListener("click",()=>{
+function submitQuiz(correct){
 
-document.body.classList.toggle("dark");
+let score =
+correct ? 100 : 0;
 
-});
+localStorage.setItem(
+"latestScore",
+score
+);
 
-document.getElementById("search")
-.addEventListener("input",(e)=>{
+document.getElementById(
+"avgScore"
+).textContent =
+score + "%";
 
-const value=e.target.value.toLowerCase();
+if(score >= 80){
+
+generateCertificate();
+
+}
+
+alert(
+"Quiz Complete. Score: " +
+score
+);
+
+}
+
+function generateCertificate(){
+
+document.getElementById(
+"certCount"
+).textContent = "1";
+
+const blob =
+new Blob(
+
+[
+"Azure & Windows AI Academy Certificate"
+],
+
+{
+type:"text/plain"
+}
+
+);
+
+const url =
+URL.createObjectURL(blob);
+
+const a =
+document.createElement("a");
+
+a.href = url;
+
+a.download =
+"certificate.txt";
+
+a.click();
+
+}
+
+document
+.getElementById("themeBtn")
+.addEventListener(
+"click",
+()=>{
+document.body.classList.toggle(
+"dark"
+);
+}
+);
+
+document
+.getElementById("search")
+.addEventListener(
+"input",
+e=>{
+
+const value =
+e.target.value.toLowerCase();
 
 renderCourses(
 courses.filter(
-c=>c.name.toLowerCase().includes(value)
+c =>
+c.name.toLowerCase()
+.includes(value)
 )
 );
 
-});
+}
+);
 
 renderCourses(courses);
