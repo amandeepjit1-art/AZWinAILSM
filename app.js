@@ -1,71 +1,212 @@
+const courses = [
+
+{
+name:"AZ-900",
+description:"Azure Fundamentals",
+link:"https://learn.microsoft.com/training/paths/microsoft-azure-fundamentals-describe-cloud-concepts/",
+modules:[
+"Cloud Concepts",
+"Azure Services",
+"Security"
+]
+},
+
+{
+name:"AI-900",
+description:"Azure AI Fundamentals",
+link:"https://learn.microsoft.com/training/paths/get-started-with-artificial-intelligence-on-azure/",
+modules:[
+"Machine Learning",
+"Computer Vision",
+"NLP",
+"Azure OpenAI"
+]
+},
+
+{
+name:"AZ-104",
+description:"Azure Administrator",
+link:"https://learn.microsoft.com/training/paths/az-104-manage-identities-governance/",
+modules:[
+"Identity",
+"Storage",
+"Networking",
+"Compute"
+]
+},
+
+{
+name:"AZ-305",
+description:"Azure Architect",
+link:"https://learn.microsoft.com/training/paths/design-identity-security/",
+modules:[
+"Architecture",
+"Security",
+"Governance"
+]
+}
+
+];
+
+const menu = document.getElementById("courseMenu");
+const content = document.getElementById("contentArea");
+
+function renderCourses(data){
+
+menu.innerHTML = "";
+
+data.forEach(course=>{
+
+const btn=document.createElement("button");
+
+btn.className="track-button";
+
+btn.textContent=course.name;
+
+btn.onclick=()=>showCourse(course);
+
+menu.appendChild(btn);
+
+});
+
+}
+
 function showCourse(course){
 
 content.innerHTML = `
 
+<div class="space-y-6">
+
+<h2 class="text-4xl font-bold text-blue-700">
+${course.name}
+</h2>
+
+<p class="text-lg text-slate-600">
+${course.description}
+</p>
+
+<div class="bg-slate-50 rounded-xl p-5 border">
+
+<h3 class="text-xl font-bold mb-3">
+📚 Learning Modules
+</h3>
+
+<ul class="list-disc pl-5 space-y-2">
+${course.modules.map(
+x=>`<li>${x}</li>`
+).join("")}
+</ul>
+
+</div>
+
+<div class="bg-yellow-100 border-l-4 border-yellow-500 rounded-xl p-4">
+
+<h3 class="font-bold text-xl">
+👉 ACTION REQUIRED
+</h3>
+
+<p>
+Complete the official Microsoft Learn path before taking the quiz.
+</p>
+
+</div>
+
+<div class="bg-gradient-to-r from-blue-600 to-cyan-500 rounded-2xl p-6 text-white shadow-xl">
+
+<div class="flex justify-between items-center flex-wrap">
+
 <div>
 
-    <h2 class="text-4xl font-bold text-blue-700 mb-4">
-        ${course.name}
-    </h2>
+<h3 class="text-2xl font-bold">
+🚀 READY FOR THE NEXT STEP?
+</h3>
 
-    <p class="text-lg mb-4">
-        ${course.description}
-    </p>
+<p class="mt-2">
+Click below to launch the official Microsoft Learn training path.
+</p>
 
-    <h3 class="font-bold text-xl mb-3">
-        📚 Learning Modules
-    </h3>
+</div>
 
-    <ul class="mb-6">
-        ${course.modules.map(m => `<li>✅ ${m}</li>`).join("")}
-    </ul>
+<div class="text-4xl animate-bounce">
+➜➜➜
+</div>
 
-    <div style="
-        background: linear-gradient(135deg,#0078d4,#00b7ff);
-        color:white;
-        padding:25px;
-        border-radius:16px;
-        margin-top:20px;
-        box-shadow:0 8px 20px rgba(0,0,0,.15);
-    ">
+</div>
 
-        <h3 style="
-            font-size:24px;
-            margin-bottom:10px;
-        ">
-            🚀 NEXT STEP
-        </h3>
+<div class="mt-5">
 
-        <p style="margin-bottom:15px;">
-            Complete the official Microsoft Learn training path before taking the quiz.
-        </p>
+${course.link}="inline-block bg-white text-blue-700 px-8 py-4 rounded-xl text-lg font-bold shadow hover:bg-slate-100">
 
-        <div style="
-            font-size:30px;
-            animation:pulse 1s infinite;
-        ">
-            ➜ ➜ ➜
-        </div>
+📘 CLICK HERE TO START MICROSOFT LEARN
 
-        ${course.link}"
-            style="
-                display:inline-block;
-                margin-top:20px;
-                padding:14px 24px;
-                background:white;
-                color:#0078d4;
-                font-weight:bold;
-                text-decoration:none;
-                border-radius:10px;
-                font-size:18px;
-            ">
-            📘 CLICK HERE TO START MICROSOFT LEARN
-        </a>
+</a>
 
-    </div>
+</div>
+
+<p class="mt-4 text-blue-100">
+
+Microsoft Learn will open in a new browser tab.
+
+</p>
+
+</div>
+
+<div class="bg-white border rounded-xl p-5 shadow">
+
+<h3 class="text-xl font-bold mb-4">
+🎯 Learning Journey
+</h3>
+
+<div class="space-y-3">
+
+<div>✅ Step 1: Review Learning Modules</div>
+
+<div class="text-blue-600 text-xl">
+⬇
+</div>
+
+<div>📘 Step 2: Open Microsoft Learn</div>
+
+<div class="text-blue-600 text-xl">
+⬇
+</div>
+
+<div>📝 Step 3: Complete Practice Quiz</div>
+
+<div class="text-green-600 text-xl">
+⬇
+</div>
+
+<div>🏆 Step 4: Earn Your Certificate</div>
+
+</div>
+
+</div>
 
 </div>
 
 `;
 
 }
+
+document.getElementById("themeBtn")
+.addEventListener("click",()=>{
+
+document.body.classList.toggle("dark");
+
+});
+
+document.getElementById("search")
+.addEventListener("input",(e)=>{
+
+const value=e.target.value.toLowerCase();
+
+renderCourses(
+courses.filter(
+c=>c.name.toLowerCase().includes(value)
+)
+);
+
+});
+
+renderCourses(courses);
