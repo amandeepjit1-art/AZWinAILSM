@@ -1,1 +1,37 @@
-const courses=[{name:"AZ-900",description:"Azure Fundamentals",link:"https://learn.microsoft.com/training/paths/microsoft-azure-fundamentals-describe-cloud-concepts/",modules:["Cloud Concepts","Azure Services","Security"]},{name:"AI-900",description:"Azure AI Fundamentals",link:"https://learn.microsoft.com/training/paths/get-started-with-artificial-intelligence-on-azure/",modules:["Machine Learning","Computer Vision","NLP","Azure OpenAI"]},{name:"AZ-104",description:"Azure Administrator",link:"https://learn.microsoft.com/training/paths/az-104-manage-identities-governance/",modules:["Identity","Storage","Networking","Compute"]},{name:"AZ-305",description:"Azure Architect",link:"https://learn.microsoft.com/training/paths/design-identity-security/",modules:["Architecture","Security","Governance"]}];const menu=document.getElementById('courseMenu');const content=document.getElementById('contentArea');function renderCourses(data){menu.innerHTML='';data.forEach(course=>{const btn=document.createElement('button');btn.className='track-button';btn.textContent=course.name;btn.onclick=()=>showCourse(course);menu.appendChild(btn);});}function showCourse(course){content.innerHTML=`<h2 class="text-3xl font-bold mb-4">${course.name}</h2><p class="mb-4">${course.description}</p><ul>${course.modules.map(x=>`<li>${x}</li>`).join('')}</ul><p class='mt-4'><a href='${course.link}' target='_blank'>Open Microsoft Learn</a></p>`;}document.getElementById('themeBtn').addEventListener('click',()=>document.body.classList.toggle('dark'));document.getElementById('search').addEventListener('input',e=>renderCourses(courses.filter(c=>c.name.toLowerCase().includes(e.target.value.toLowerCase()))));renderCourses(courses);
+<div class="mt-6 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-2xl p-6 text-white shadow-xl">
+
+    <div class="flex items-center justify-between flex-wrap gap-4">
+
+        <div>
+
+            <h3 class="text-2xl font-bold">
+                🚀 Ready for the Next Step?
+            </h3>
+
+            <p class="mt-2 text-blue-100">
+                Click below to launch the official Microsoft Learn training path.
+            </p>
+
+        </div>
+
+        <div class="animate-pulse">
+
+            <span class="text-4xl">
+                ➜➜➜
+            </span>
+
+        </div>
+
+    </div>
+
+    <div class="mt-5">
+
+        ${course.link}
+
+            📘 CLICK HERE TO START MICROSOFT LEARN
+
+        </a>
+
+    </div>
+
+</div>
