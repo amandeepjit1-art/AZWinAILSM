@@ -1,1 +1,29 @@
 .card{background:white;border-radius:12px;padding:20px;text-align:center;box-shadow:0 2px 12px rgba(0,0,0,.1)} .track-button{width:100%;margin-bottom:10px;border:none;border-radius:10px;padding:12px;background:#0078d4;color:white;cursor:pointer}.track-button:hover{background:#005ea6}.dark{background:#0f172a;color:white}
+.track-button{
+width:100%;
+padding:12px;
+margin-bottom:10px;
+background:#0078d4;
+color:white;
+border:none;
+border-radius:10px;
+font-weight:bold;
+cursor:pointer;
+transition:.3s;
+}
+
+.track-button:hover{
+background:#005ea6;
+transform:translateY(-2px);
+}
+
+.dark{
+background:#0f172a;
+color:white;
+}
+
+@keyframes pulseArrow{
+0%{transform:translateX(0);}
+50%{transform:translateX(10px);}
+100%{transform:translateX(0);}
+}
