@@ -4,15 +4,15 @@ const tracks = [
 3
 name: "AZ-900",
 4
-description: "Azure Fundamentals certification.",
+description: "Microsoft Azure Fundamentals certification.",
 5
 modules: [
 6
 "Cloud Concepts",
 7
-"Azure Services",
+"Azure Core Services",
 8
-"Security and Governance"
+"Security & Governance"
 9
 ]
 10
@@ -22,7 +22,7 @@ modules: [
 12
 name: "AI-900",
 13
-description: "Azure AI Fundamentals certification.",
+description: "Microsoft Azure AI Fundamentals certification.",
 14
 modules: [
 15
@@ -40,7 +40,7 @@ modules: [
 21
 name: "AZ-104",
 22
-description: "Azure Administrator certification.",
+description: "Microsoft Azure Administrator certification.",
 23
 modules: [
 24
@@ -48,96 +48,230 @@ modules: [
 25
 "Storage",
 26
-"Networking"
+"Compute",
 27
-]
+"Networking"
 28
-},
-29
-{
-30
-name: "AZ-305",
-31
-description: "Azure Architect certification.",
-32
-modules: [
-33
-"Architecture",
-34
-"Security",
-35
-"Governance"
-36
 ]
+29
+},
+30
+{
+31
+name: "AZ-305",
+32
+description: "Microsoft Azure Solutions Architect certification.",
+33
+modules: [
+34
+"Architecture Design",
+35
+"Business Continuity",
+36
+"Security",
 37
-}
+"Governance"
 38
-];
+]
 39
- 
+}
 40
-const menu = document.getElementById("menu");
+];
 41
-const content = document.getElementById("content");
-42
-const dashboard = document.getElementById("dashboard");
-43
  
+42
+const menu = document.getElementById("menu");
+43
+const content = document.getElementById("content");
 44
-tracks.forEach(track => {
+const dashboard = document.getElementById("dashboard");
 45
-const btn = document.createElement("button");
+const search = document.getElementById("search");
 46
  
 47
-btn.textContent = track.name;
+let selectedTrack = null;
 48
  
 49
-btn.addEventListener("click", () => {
+function renderTracks(items){
 50
  
 51
-dashboard.textContent =
+menu.innerHTML = "";
 52
-`Selected: ${track.name}`;
-53
  
+53
+items.forEach(track => {
 54
-content.innerHTML = `
+ 
 55
-<h2>${track.name}</h2>
+const btn = document.createElement("button");
 56
-<p>${track.description}</p>
+ 
 57
-<ul>
+btn.textContent = track.name;
 58
-${track.modules.map(m => `<li>${m}</li>`).join("")}
+ 
 59
-</ul>
+btn.addEventListener("click", () => {
 60
-`;
+ 
 61
-});
+selectedTrack = track;
 62
  
 63
-menu.appendChild(btn);
+dashboard.textContent =
 64
-});
+"Selected: " + track.name;
 65
  
 66
-document.getElementById("revisionBtn").addEventListener("click", () => {
+content.innerHTML = `
 67
-content.innerHTML += "<p><strong>Revision sheet loaded.</strong></p>";
+<h2>${track.name}</h2>
 68
-});
-69
  
+69
+<p>${track.description}</p>
 70
-document.getElementById("quizBtn").addEventListener("click", () => {
+ 
 71
-content.innerHTML += "<p><strong>Quiz loaded.</strong></p>";
+<h3>Modules</h3>
 72
+ 
+73
+<ul>
+74
+${track.modules.map(
+75
+m => `<li>${m}</li>`
+76
+).join("")}
+77
+</ul>
+78
+`;
+79
+});
+80
+ 
+81
+menu.appendChild(btn);
+82
+});
+83
+}
+84
+ 
+85
+renderTracks(tracks);
+86
+ 
+87
+search.addEventListener("input", () => {
+88
+ 
+89
+const value =
+90
+search.value.toLowerCase();
+91
+ 
+92
+const filtered =
+93
+tracks.filter(t =>
+94
+t.name.toLowerCase().includes(value)
+95
+);
+96
+ 
+97
+renderTracks(filtered);
+98
+});
+99
+ 
+100
+document
+101
+.getElementById("revisionBtn")
+102
+.addEventListener("click", () => {
+103
+ 
+104
+if(!selectedTrack){
+105
+alert("Select a certification first.");
+106
+return;
+107
+}
+108
+ 
+109
+content.innerHTML += `
+110
+<hr>
+111
+<h3>Revision Notes</h3>
+112
+<p>
+113
+Review all modules listed above before attempting certification.
+114
+</p>
+115
+`;
+116
+});
+117
+ 
+118
+document
+119
+.getElementById("quizBtn")
+120
+.addEventListener("click", () => {
+121
+ 
+122
+if(!selectedTrack){
+123
+alert("Select a certification first.");
+124
+return;
+125
+}
+126
+ 
+127
+content.innerHTML = `
+128
+<h2>${selectedTrack.name} Practice Quiz</h2>
+129
+ 
+130
+<p>
+131
+Which Microsoft certification track
+132
+are you currently studying?
+133
+</p>
+134
+ 
+135
+<button onclick="alert('Correct!')">
+136
+${selectedTrack.name}
+137
+</button>
+138
+`;
+139
 });
